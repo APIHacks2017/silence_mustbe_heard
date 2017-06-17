@@ -1,23 +1,26 @@
 package com.klinker.android.emoji_keyboard.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.klinker.android.emoji_keyboard.EmojiKeyboardService;
 import com.klinker.android.emoji_keyboard.sqlite.EmojiDataSource;
 import com.klinker.android.emoji_keyboard.sqlite.RecentEntry;
+import com.klinker.android.emoji_keyboard_trial.R;
 
 import java.util.ArrayList;
 
 public class RecentEmojiAdapter extends BaseEmojiAdapter {
 
+    private final Context mContext;
     private ArrayList<RecentEntry> frequentlyUsedEmojiList;
     private EmojiDataSource dataSource;
 
     public RecentEmojiAdapter(Context context) {
         super((EmojiKeyboardService) context);
-
+        mContext = context; 
         dataSource = new EmojiDataSource(context);
         dataSource.openInReadWriteMode();
         frequentlyUsedEmojiList = (ArrayList<RecentEntry>) dataSource.getAllEntriesInDescendingOrderOfCount();
@@ -35,42 +38,44 @@ public class RecentEmojiAdapter extends BaseEmojiAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final View imageView = super.getView(position, convertView, parent);
+//        final View imageView = super.getView(position, convertView, parent);
+//
+//        final RecentEmojiAdapter adapter = this;
+//
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                emojiKeyboardService.sendText(emojiTexts.get(position));
+//
+//                for (int i = 0; i < frequentlyUsedEmojiList.size(); i++) {
+//                    if (frequentlyUsedEmojiList.get(i).getText().equals(emojiTexts.get(position))) {
+//                        dataSource.incrementExistingEntryCountbyOne(iconIds.get(position) + "");
+//                        frequentlyUsedEmojiList.get(i).setCount(frequentlyUsedEmojiList.get(i).getCount());
+//                        return;
+//                    }
+//                }
+//
+//                RecentEntry recentEntry = dataSource.insertNewEntry(emojiTexts.get(position), iconIds.get(position) + "");
+//
+//                if (recentEntry != null)
+//                    frequentlyUsedEmojiList.add(recentEntry);
+//            }
+//        });
+//
+//        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//
+//                dataSource.deleteEntryWithId(frequentlyUsedEmojiList.get(position).getId());
+//                frequentlyUsedEmojiList.remove(position);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//            }
+//        });
 
-        final RecentEmojiAdapter adapter = this;
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                emojiKeyboardService.sendText(emojiTexts.get(position));
-
-                for (int i = 0; i < frequentlyUsedEmojiList.size(); i++) {
-                    if (frequentlyUsedEmojiList.get(i).getText().equals(emojiTexts.get(position))) {
-                        dataSource.incrementExistingEntryCountbyOne(iconIds.get(position) + "");
-                        frequentlyUsedEmojiList.get(i).setCount(frequentlyUsedEmojiList.get(i).getCount());
-                        return;
-                    }
-                }
-
-                RecentEntry recentEntry = dataSource.insertNewEntry(emojiTexts.get(position), iconIds.get(position) + "");
-
-                if (recentEntry != null)
-                    frequentlyUsedEmojiList.add(recentEntry);
-            }
-        });
-
-        imageView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-                dataSource.deleteEntryWithId(frequentlyUsedEmojiList.get(position).getId());
-                frequentlyUsedEmojiList.remove(position);
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-        });
-
-        return imageView;
+        final View myView = LayoutInflater.from(mContext).inflate(R.layout.keyboard_default,null);
+        
+        return myView;
     }
 
     @Override

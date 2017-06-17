@@ -13,6 +13,7 @@ import com.klinker.android.emoji_keyboard.constants.Apple_EmojiIcons;
 import com.klinker.android.emoji_keyboard.constants.EmojiIcons;
 import com.klinker.android.emoji_keyboard.constants.Google_EmojiIcons;
 import com.klinker.android.emoji_keyboard.constants.EmojiTexts;
+import com.klinker.android.emoji_keyboard.view.CustomKeyboardSinglePageView;
 import com.klinker.android.emoji_keyboard.view.KeyboardSinglePageView;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class EmojiPagerAdapter extends PagerAdapter {
 
     private final String[] TITLES = { "recent",
+             "Asst.",
                                     "people",
                                     "things",
                                     "nature",
@@ -39,6 +41,7 @@ public class EmojiPagerAdapter extends PagerAdapter {
 
         EmojiIcons icons = getPreferedIconSet();
         pages.add(new KeyboardSinglePageView(context, new RecentEmojiAdapter(context)).getView());
+        pages.add(new CustomKeyboardSinglePageView(context, new StaticEmojiAdapter(context, EmojiTexts.peopleEmojiTexts, icons.getPeopleIconIds())).getView());
         pages.add(new KeyboardSinglePageView(context, new StaticEmojiAdapter(context, EmojiTexts.peopleEmojiTexts, icons.getPeopleIconIds())).getView());
         pages.add(new KeyboardSinglePageView(context, new StaticEmojiAdapter(context, EmojiTexts.thingsEmojiTexts, icons.getThingsIconIds())).getView());
         pages.add(new KeyboardSinglePageView(context, new StaticEmojiAdapter(context, EmojiTexts.natureEmojiTexts, icons.getNatureIconIds())).getView());

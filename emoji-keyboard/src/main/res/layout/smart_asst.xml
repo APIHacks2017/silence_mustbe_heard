@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:weightSum="4"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:id="@+id/news"
+        android:minHeight="400dp"
+        android:layout_height="match_parent">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="News"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:gravity="center"
+            />
+
+        <ListView
+            android:id="@+id/newsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="400dp"
+            />
+
+    </LinearLayout>
+    </ScrollView>
+    <ScrollView
+        android:id="@+id/events"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_toRightOf="@id/news"
+        android:layout_height="match_parent">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Events"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:gravity="center"
+            />
+    </LinearLayout>
+</ScrollView>
+    <ScrollView
+        android:id="@+id/others"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_toRightOf="@id/events"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Others"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:gravity="center"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
