@@ -1,5 +1,7 @@
 package com.klinker.android.emoji_keyboard.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.util.Log;
 import android.util.TypedValue;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -18,6 +21,7 @@ import com.klinker.android.emoji_keyboard.EmojiKeyboardService;
 import com.klinker.android.emoji_keyboard.Utility;
 import com.klinker.android.emoji_keyboard.adapter.NewsAdapter;
 import com.klinker.android.emoji_keyboard.models.NewsResponse;
+import com.klinker.android.emoji_keyboard.models.TranslateResponse;
 import com.klinker.android.emoji_keyboard.network.Endpoints;
 import com.klinker.android.emoji_keyboard_trial.R;
 
@@ -72,6 +76,41 @@ public class CustomKeyboardSinglePageView {
         LayoutInflater.from(context).inflate(R.layout.smart_asst, customPage);
 
         final ListView mList = (ListView) customPage.findViewById(R.id.newsList);
+        Button txButton =(Button) customPage.findViewById(R.id.translate);
+        txButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                / Examines the item on the clipboard. If getText() does not return null, the clip item contains the
+// text. Assumes that this application can only handle one item at a time.
+                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+// Gets the clipboard as text.
+                String pasteData = item.getText().toString();
+
+                Log.d("ui","button clicked"+pasteData);
+
+                Call<TranslateResponse> txn1 = mAPI.translate("https://www.googleapis.com/language/translate/v2","AIzaSyCrL8YYxBNTfv3AbqApWQyhoPhV9nipJl8","en","ta",pasteData);
+                txn1.enqueue(new Callback<TranslateResponse>() {
+                    @Override
+                    public void onResponse(Call<TranslateResponse> call, Response<TranslateResponse> response) {
+                        if (response.code() == 200) {
+                            final TranslateResponse res = response.body();
+                            String translatedItm = res.getData().getTranslations().get(0).getTranslatedText();
+                            Log.d("ui", "Translated text" + translatedItm);
+                            EmojiKeyboardService mSrv = (EmojiKeyboardService) context;
+                            mSrv.sendText(translatedItm);
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TranslateResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         String resp = Utility.getValueInPref(context,Utility.NEWS_DATA);
 
         if(resp==null) {
@@ -93,6 +132,7 @@ public class CustomKeyboardSinglePageView {
                 @Override
                 public void onFailure(Call<NewsResponse> call, Throwable t) {
                     Log.d("ui", "enda run aala");
+
                 }
             });
         }else{
@@ -102,6 +142,15 @@ public class CustomKeyboardSinglePageView {
             NewsAdapter mAdapter = new NewsAdapter((EmojiKeyboardService) context, res);
             mList.setAdapter(mAdapter);
         }
+
+
+
+
         return customPage;
     }
+
+
+
+
+
 }

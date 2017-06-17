@@ -2,9 +2,12 @@ package com.klinker.android.emoji_keyboard.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.inputmethodservice.Keyboard;
+import android.inputmethodservice.KeyboardView;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,8 +18,11 @@ import com.klinker.android.emoji_keyboard.constants.Google_EmojiIcons;
 import com.klinker.android.emoji_keyboard.constants.EmojiTexts;
 import com.klinker.android.emoji_keyboard.view.CustomKeyboardSinglePageView;
 import com.klinker.android.emoji_keyboard.view.KeyboardSinglePageView;
+import com.klinker.android.emoji_keyboard_trial.R;
 
 import java.util.ArrayList;
+
+import static com.klinker.android.emoji_keyboard_trial.R.id.keyboard;
 
 public class EmojiPagerAdapter extends PagerAdapter {
 
@@ -28,13 +34,13 @@ public class EmojiPagerAdapter extends PagerAdapter {
                                     "places",
                                     "symbols" };
 
+
     private ViewPager pager;
     private ArrayList<View> pages;
     private int keyboardHeight;
 
-    public EmojiPagerAdapter(Context context, ViewPager pager, int keyboardHeight) {
+    public EmojiPagerAdapter(final Context context, ViewPager pager, int keyboardHeight) {
         super();
-
         this.pager = pager;
         this.keyboardHeight = keyboardHeight;
         this.pages = new ArrayList<View>();
@@ -47,6 +53,7 @@ public class EmojiPagerAdapter extends PagerAdapter {
         pages.add(new KeyboardSinglePageView(context, new StaticEmojiAdapter(context, EmojiTexts.natureEmojiTexts, icons.getNatureIconIds())).getView());
         pages.add(new KeyboardSinglePageView(context, new StaticEmojiAdapter(context, EmojiTexts.transEmojiTexts, icons.getTransIconIds())).getView());
         pages.add(new KeyboardSinglePageView(context, new StaticEmojiAdapter(context, EmojiTexts.otherEmojiTexts, icons.getOtherIconIds())).getView());
+
 
     }
 

@@ -16,7 +16,7 @@
         android:text="Sample News article"
         android:layout_gravity="center_vertical"
         android:layout_margin="4dp"
-        android:maxLength="13"
+        android:maxLines="3"
         android:textAppearance="?android:textAppearanceSmall"
         />
 

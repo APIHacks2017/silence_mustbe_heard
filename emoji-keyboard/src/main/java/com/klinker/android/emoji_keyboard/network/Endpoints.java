@@ -1,6 +1,7 @@
 package com.klinker.android.emoji_keyboard.network;
 
 import com.klinker.android.emoji_keyboard.models.NewsResponse;
+import com.klinker.android.emoji_keyboard.models.TranslateResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public interface Endpoints {
     @GET("/gateway/Top%20Stories/2.0.0/{type}.json?api-key="+newsAPIkey)
     Call<NewsResponse> getNews(@Path("type") String newsType);
 
-
-
+//    https://www.googleapis.com/language/translate/v2?key=AIzaSyCrL8YYxBNTfv3AbqApWQyhoPhV9nipJl8&source=ta&target=en&q=நீ என்ன செய்து கொண்டிருக்கிற?
+    @GET
+    Call<TranslateResponse> translate(@Url String url, @Query("key") String key, @Query("source") String source,@Query("target") String target, @Query("q") String q);
 }
