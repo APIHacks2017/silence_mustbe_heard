@@ -74,6 +74,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Translate"/>
+            <Button
+                android:id="@+id/shareGPS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share GPS"/>
+            <Button
+                android:id="@+id/shareAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Address"/>
+            <Button
+                android:id="@+id/shareAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Bank A/c details"/>
+
         </LinearLayout>
     </ScrollView>
 

@@ -3,6 +3,7 @@ package com.klinker.android.emoji_keyboard.view;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -24,6 +25,12 @@ import com.klinker.android.emoji_keyboard.models.NewsResponse;
 import com.klinker.android.emoji_keyboard.models.TranslateResponse;
 import com.klinker.android.emoji_keyboard.network.Endpoints;
 import com.klinker.android.emoji_keyboard_trial.R;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.lang.reflect.Type;
 
@@ -44,6 +51,7 @@ public class CustomKeyboardSinglePageView {
     private Context context;
     private BaseAdapter adapter;
     private Endpoints mAPI;
+    private DisplayImageOptions imOptions;
 
     public CustomKeyboardSinglePageView(Context context, BaseAdapter adapter) {
         this.context = context;
@@ -67,8 +75,12 @@ public class CustomKeyboardSinglePageView {
                 .build();
         this.mAPI = retrofit.create(Endpoints.class);
 
+
+
         Log.d("ui","init page view");
     }
+
+
 
     public View getView() {
 
@@ -77,6 +89,32 @@ public class CustomKeyboardSinglePageView {
 
         final ListView mList = (ListView) customPage.findViewById(R.id.newsList);
         Button txButton =(Button) customPage.findViewById(R.id.translate);
+        customPage.findViewById(R.id.shareGPS).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EmojiKeyboardService mSrv = (EmojiKeyboardService) context;
+                mSrv.sendText("Hey I m in at https://goo.gl/maps/gb9QSggKYNw");
+            }
+        });
+
+        customPage.findViewById(R.id.shareAddress).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EmojiKeyboardService mSrv = (EmojiKeyboardService) context;
+                mSrv.sendText("My house location is 1,Kavarai St, west mambalam, Near - Amman Koil");
+            }
+        });
+
+        customPage.findViewById(R.id.shareAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EmojiKeyboardService mSrv = (EmojiKeyboardService) context;
+                mSrv.sendText("ICICI Bank West Mambalam 34532423453245, IFSC - ICICI234234");
+            }
+        });
+
+        customPage.findViewById(R.id.translate);
+
         txButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
